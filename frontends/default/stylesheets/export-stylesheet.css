@@ -1,0 +1,12 @@
+.active-scaffold-header div.actions a.show_export {
+background-image: url(../../../images/active_scaffold/default/export.png);
+background-position:1px 50%;
+background-repeat:no-repeat;
+padding-left:19px;
+}
+.active-scaffold div.show_export-view label {
+  margin-right: 20px;
+}
+.active-scaffold div.show_export-view label #delimiter {
+  font-family: monospace;
+}
