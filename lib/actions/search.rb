@@ -8,7 +8,6 @@ module ActiveScaffold::Actions
     
     def init_session_var
       session[:search] = params[:search]
-      debugger
     end
   end
 end
