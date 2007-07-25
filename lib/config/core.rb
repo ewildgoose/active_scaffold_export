@@ -21,6 +21,8 @@ module ActiveScaffold::Config
     @@export_default_skip_header = false
     @@export_default_delimiter = ','
 
+    ActionController::Resources::Resource::ACTIVE_SCAFFOLD_ROUTING[:collection][:show_export] = :get
+
     class << self
       alias_method_chain :template_search_path, :export
     end

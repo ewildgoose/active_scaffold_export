@@ -48,8 +48,7 @@ module ActiveScaffold::Config
 
     # provides access to the list of columns specifically meant for this action to use
     def columns
-#      self.columns = @core.columns._inheritable unless @columns
-      self.columns = @core.columns.content_column_names unless @columns # lazy evaluation
+      self.columns = @core.columns._inheritable unless @columns
       @columns
     end
     def columns=(val)

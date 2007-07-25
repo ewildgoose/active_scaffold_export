@@ -6,7 +6,7 @@ module ActiveScaffold::Actions
     end
     
     def init_session_var
-      session[:search] = params[:search] if !params[:search].nil? || params[:commit]=='Recherche'
+      session[:search] = params[:search] if !params[:search].nil? || params[:commit] == as_('Search')
     end
 
     # display the customization form or skip directly to export

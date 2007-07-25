@@ -4,14 +4,14 @@
     :row_sep => "\n",
     :col_sep => params[:delimiter],
     :force_quotes => @export_config.force_quotes,
-    :headers => @export_columns.collect { |col| col.name.to_s }
+    :headers => @export_columns.collect { |column| format_export_column_header_name(column) }
   }
 
   data = FasterCSV.generate(fcsv_options) do |csv|
     csv << fcsv_options[:headers] if params[:skip_header].nil?
     @records.each do |record|
-      csv << @export_columns.collect { |col|
-        render_csv_column(record, col)
+      csv << @export_columns.collect { |column|
+        get_export_column_value(record, column)
       }
     end
   end
