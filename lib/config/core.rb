@@ -5,9 +5,12 @@ module ActiveScaffold::Config
     @@export_plugin_directory = File.expand_path(__FILE__).match(/vendor\/plugins\/([^\/]*)/)[1]
 
     # the active_scaffold_export template path
-    def self.template_search_path_with_export
+    def template_search_path_with_export(frontend = self.frontend)
+      frontends_path = "../../vendor/plugins/#{ActiveScaffold::Config::Core.export_plugin_directory}/frontends"
+
       search_path = self.template_search_path_without_export
-      search_path << "../../vendor/plugins/#{ActiveScaffold::Config::Core.export_plugin_directory}/frontends/default/views"
+      search_path << "#{frontends_path}/#{frontend}/views" if frontend.to_sym != :default
+      search_path << "#{frontends_path}/default/views"
       return search_path
     end
 
