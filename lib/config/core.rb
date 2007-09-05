@@ -8,7 +8,7 @@ module ActiveScaffold::Config
     def template_search_path_with_export(frontend = self.frontend)
       frontends_path = "../../vendor/plugins/#{ActiveScaffold::Config::Core.export_plugin_directory}/frontends"
 
-      search_path = self.template_search_path_without_export
+      search_path = template_search_path_without_export
       search_path << "#{frontends_path}/#{frontend}/views" if frontend.to_sym != :default
       search_path << "#{frontends_path}/default/views"
       return search_path
@@ -26,8 +26,6 @@ module ActiveScaffold::Config
 
     ActionController::Resources::Resource::ACTIVE_SCAFFOLD_ROUTING[:collection][:show_export] = :get
 
-    class << self
-      alias_method_chain :template_search_path, :export
-    end
+    alias_method_chain :template_search_path, :export
   end
 end
