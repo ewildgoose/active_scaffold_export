@@ -12,21 +12,17 @@ module ActiveScaffold::Actions
     # display the customization form or skip directly to export
     def show_export
       export_config = active_scaffold_config.export
-      if export_config.show_form
-        respond_to do |wants|
-          wants.html do
-            if successful?
-              render(:partial => 'show_export', :layout => true)
-            else
-              return_to_main
-            end
-          end
-          wants.js do
-            render(:partial => 'show_export', :layout => false)
+      respond_to do |wants|
+        wants.html do
+          if successful?
+            render(:partial => 'show_export', :layout => true)
+          else
+            return_to_main
           end
         end
-      else
-        export
+        wants.js do
+          render(:partial => 'show_export', :layout => false)
+        end
       end
     end
 
@@ -40,16 +36,16 @@ module ActiveScaffold::Actions
         }
         options = {
           :export_columns => export_columns,
-          :full_download => export_config.default_full_download,
+          :full_download => export_config.default_full_download.to_s,
           :delimiter => export_config.default_delimiter,
-          :skip_header => export_config.default_skip_header
+          :skip_header => export_config.default_skip_header.to_s
         }
         params.merge!(options)
       end
 
       find_items_for_export
 
-      response.headers['Content-Disposition'] = "attachment; filename=#{self.controller_name}.csv"
+      response.headers['Content-Disposition'] = "attachment; filename=#{export_file_name}"
       render :partial => 'export', :content_type => Mime::CSV, :status => response_status 
     end
 
@@ -68,7 +64,7 @@ module ActiveScaffold::Actions
       do_search
       params[:segment_id] = session[:segment_id]
       do_segment_search rescue nil
-      unless params[:full_download]=='true'
+      unless params[:full_download] == 'true'
         find_options.merge!({
           :per_page => active_scaffold_config.list.user.per_page,
           :page => active_scaffold_config.list.user.page
@@ -78,6 +74,12 @@ module ActiveScaffold::Actions
       @export_config = export_config
       @export_columns = export_columns
       @records = find_page(find_options).items
+    end
+
+    # The default name of the downloaded file.
+    # You may override the method to specify your own file name generation.
+    def export_file_name
+      "#{self.controller_name}.csv"
     end
 
     # The default security delegates to ActiveRecordPermissions.
