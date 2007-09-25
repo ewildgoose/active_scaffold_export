@@ -61,7 +61,7 @@ module ActiveScaffold::Actions
       
       find_options = { :sorting => active_scaffold_config.list.user.sorting }
       params[:search] = session[:search]
-      do_search
+      do_search rescue nil
       params[:segment_id] = session[:segment_id]
       do_segment_search rescue nil
       unless params[:full_download] == 'true'
