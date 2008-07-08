@@ -3,6 +3,20 @@ module ActiveScaffold::Actions
     def self.included(base)
       base.before_filter :export_authorized?, :only => [:export]
       base.before_filter :init_session_var
+      
+      as_export_plugin_path = File.join(RAILS_ROOT, 'vendor', 'plugins', as_export_plugin_name, 'frontends', 'default', 'views')
+      
+      if base.respond_to?(:generic_view_paths) && ! base.generic_view_paths.empty?
+        base.generic_view_paths.insert(0, as_export_plugin_path)
+      else  
+        config.inherited_view_paths << as_export_plugin_path
+      end
+    end    
+    
+    def self.as_export_plugin_name
+      # extract the name of the plugin as installed
+      /.+vendor\/plugins\/(.+)\/lib/.match(__FILE__)
+      plugin_name = $1
     end
     
     def init_session_var
@@ -46,7 +60,7 @@ module ActiveScaffold::Actions
       find_items_for_export
 
       response.headers['Content-Disposition'] = "attachment; filename=#{export_file_name}"
-      render :partial => 'export', :content_type => Mime::CSV, :status => response_status 
+      render :partial => 'export', :layout => false, :content_type => Mime::CSV, :status => response_status 
     end
 
     protected

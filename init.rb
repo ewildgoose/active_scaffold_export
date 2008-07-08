@@ -2,11 +2,11 @@
 ActiveScaffold rescue throw "should have included ActiveScaffold plug in first.  Please make sure that this plug-in comes alphabetically after the ActiveScaffold plug-in"
 
 # Load our overrides
-Kernel::load 'actions/export.rb'
-Kernel::load 'config/export.rb'
-Kernel::load 'config/core.rb'
-Kernel::load 'helpers/view_helpers.rb'
-Kernel::load 'helpers/export_helpers.rb'
+require "#{File.dirname(__FILE__)}/lib/config/core.rb"
+require "#{File.dirname(__FILE__)}/lib/config/export.rb"
+require "#{File.dirname(__FILE__)}/lib/actions/export.rb"
+require "#{File.dirname(__FILE__)}/lib/helpers/view_helpers.rb"
+require "#{File.dirname(__FILE__)}/lib/helpers/export_helpers.rb"
 
 ##
 ## Run the install script, too, just to make sure
