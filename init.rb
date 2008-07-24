@@ -5,7 +5,7 @@ ActiveScaffold rescue throw "should have included ActiveScaffold plug in first. 
 require "#{File.dirname(__FILE__)}/lib/config/core.rb"
 require "#{File.dirname(__FILE__)}/lib/config/export.rb"
 require "#{File.dirname(__FILE__)}/lib/actions/export.rb"
-require "#{File.dirname(__FILE__)}/lib/helpers/view_helpers.rb"
+require "#{File.dirname(__FILE__)}/lib/helpers/view_helpers_override.rb"
 require "#{File.dirname(__FILE__)}/lib/helpers/export_helpers.rb"
 
 ##
