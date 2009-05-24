@@ -12,7 +12,11 @@ module ActiveScaffold::Config
     cattr_accessor :link
     @@link = ActiveScaffold::DataStructures::ActionLink.new('show_export', :label => 'Export', :type => :table, :security_method => :export_authorized?)
 
-    
+    # configures where the plugin itself is located. there is no instance version of this.
+    cattr_accessor :plugin_directory
+    @@plugin_directory = File.expand_path(__FILE__).match(/vendor\/plugins\/([^\/]*)/)[1]
+
+
     # instance-level configuration
     # ----------------------------
 
