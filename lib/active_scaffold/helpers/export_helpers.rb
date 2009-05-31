@@ -37,17 +37,17 @@ module ActiveScaffold
       end
 
       def format_export_column(raw_value)
-        format_column(raw_value)
+        format_value(raw_value)
       end
 
       def format_singular_association_export_column(association_record)
-        format_column(association_record.to_label)
+        format_value(association_record.to_label)
       end
 
       def format_plural_association_export_column(association_records)
         firsts = association_records.first(4).collect { |v| v.to_label }
         firsts[3] = '…' if firsts.length == 4
-        format_column(firsts.join(','))
+        format_value(firsts.join(','))
       end
 
       ## This helper can be overridden to change the way that the headers

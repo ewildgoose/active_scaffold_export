@@ -4,26 +4,10 @@ module ActiveScaffold::Actions
       base.before_filter :export_authorized?, :only => [:export]
       base.before_filter :init_session_var
 
-#      as_export_plugin_path = File.join(RAILS_ROOT, 'vendor', 'plugins', as_export_plugin_name, 'frontends', 'default', 'views')
       as_export_plugin_path = File.join(Rails.root, 'vendor', 'plugins', ActiveScaffold::Config::Export.plugin_directory, 'frontends', 'default' , 'views')
       
-      ActiveScaffold.class_eval do
-        @active_scaffold_frontends << active_scaffold_default_frontend_path
-      end
-      puts "Set ASE paths!!"
-asdf
-      if base.respond_to?(:generic_view_paths) && ! base.generic_view_paths.empty?
-        base.generic_view_paths.insert(0, as_export_plugin_path)
-      else
-        config.inherited_view_paths << as_export_plugin_path
-      end
+      base.add_active_scaffold_path as_export_plugin_path
     end
-
-#    def self.as_export_plugin_name
-#      # extract the name of the plugin as installed
-#      /.+vendor\/plugins\/(.+)\/lib/.match(__FILE__)
-#      plugin_name = $1
-#    end
 
     def init_session_var
       session[:search] = params[:search] if !params[:search].nil? || params[:commit] == as_('Search')
